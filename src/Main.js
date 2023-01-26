@@ -65,7 +65,6 @@ export class Main extends React.Component {
             <p>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</p>
           </>
         }
-
       </>
     );
   }
