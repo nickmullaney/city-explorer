@@ -1,5 +1,4 @@
 import axios from "axios";
-import { async } from "q";
 import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
 
@@ -16,7 +15,6 @@ export class Main extends React.Component {
       restaurantData: [],
       locationData: [],
       weatherData: []
-
     }
   }
 
@@ -27,8 +25,7 @@ export class Main extends React.Component {
       city: cityName
     },
     () => console.log(this.state.city)
-    )
-  }
+    )}
 
   //This should display the city data
   displaySearch = async(e) => {
