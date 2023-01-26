@@ -1,6 +1,7 @@
 import axios from "axios";
 import React from "react";
 import { Button, Container, Form } from "react-bootstrap";
+import Map from "./Map";
 
 export class Main extends React.Component {
   // import props
@@ -35,7 +36,8 @@ export class Main extends React.Component {
 
     //this waits the pull response from the url then sets response
     let response = await axios.get(url);
-
+    console.log(response);
+  
     // new state set
    this.setState({
       displayInfo: true,
@@ -55,13 +57,19 @@ export class Main extends React.Component {
             <Button onClick={this.displaySearch}>Check it out!</Button>
           </Form>
         </Container>
-
+        
+        {/* imports the map */}
+        {this.state.cityData.lat && 
+        <Map lat ={this.state.cityData.lat} lon={this.state.cityData.lon}/>}
+        
+        <div>
         {this.state.displayInfo &&
           <>
             <h2>{this.state.cityData.display_name}</h2>
             <p>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</p>
           </>
         }
+        </div>
       </>
     );
   }
