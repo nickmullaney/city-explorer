@@ -1,9 +1,11 @@
 import React from "react";
 
-export class Footer extends React.Component{
-  render(){
-    return(
+class Footer extends React.Component {
+  render() {
+    return (
       <p>© City Explorer 2023 </p>
     )
   }
 }
+
+export default Footer;
