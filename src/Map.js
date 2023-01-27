@@ -10,6 +10,7 @@ class Map extends React.Component{
       </Container>
     )
   }
+  
 }
 
 export default Map;
