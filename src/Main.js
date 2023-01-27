@@ -1,7 +1,8 @@
 import axios from "axios";
 import React from "react";
-import { Button, Container, Form } from "react-bootstrap";
+import { Button, Card, Container, Form } from "react-bootstrap";
 import Map from "./Map";
+
 
 export class Main extends React.Component {
   // import props
@@ -20,16 +21,17 @@ export class Main extends React.Component {
   }
 
   // Takes care of our search input data, sets the city as the one selected
-  handleSearchInput = e =>{
+  handleSearchInput = e => {
     let cityName = e.target.value;
     this.setState({
       city: cityName
     },
-    () => console.log(this.state.city)
-    )}
+      () => console.log(this.state.city)
+    )
+  }
 
   //This should display the city data
-  displaySearch = async(e) => {
+  displaySearch = async (e) => {
     e.preventDefault();
 
     let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`
@@ -37,9 +39,9 @@ export class Main extends React.Component {
     //this waits the pull response from the url then sets response
     let response = await axios.get(url);
     console.log(response);
-  
+
     // new state set
-   this.setState({
+    this.setState({
       displayInfo: true,
       cityData: response.data[0]
     })
@@ -49,26 +51,43 @@ export class Main extends React.Component {
     return (
       <>
         <Container>
-          <Form>
+          <Form className="citySearch">
             <Form.Group>
               <Form.Label>Enter a City To Explore</Form.Label>
-              <Form.Control type="text" onInput={this.handleSearchInput}/>
+              <Form.Control type="text" onInput={this.handleSearchInput} placeholder="Search for a city" />
             </Form.Group>
             <Button onClick={this.displaySearch}>Check it out!</Button>
           </Form>
         </Container>
-        
-        {/* imports the map */}
-        {this.state.cityData.lat && 
-        <Map lat ={this.state.cityData.lat} lon={this.state.cityData.lon}/>}
-        
-        <div>
-        {this.state.displayInfo &&
-          <>
-            <h2>{this.state.cityData.display_name}</h2>
-            <p>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</p>
-          </>
-        }
+
+        {/* Card testing spot for mb-3 image on top card */}
+        {/* <div class="card mb-3">
+          <img class="card-img-top" src={<Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />} alt="Card image cap" />
+          <div class="card-body">
+            <h5 class="card-title">Card title</h5>
+            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+          </div>
+        </div>
+        <Card-mb-3>
+          <Card-img-top src={<Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />} />
+        </Card-mb-3> */}
+
+        <div className="cityMap">
+          <Card style={{ width: 'auto' }}>
+            {/* imports the map */}
+            {this.state.cityData.lat &&
+              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />}
+            <div>
+              {this.state.displayInfo &&
+                <>
+                  <Card.Title as="h2">{this.state.cityData.display_name}</Card.Title>
+                  <Card.Text>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</Card.Text>
+                </>
+              }
+            </div>
+          </Card>
+
         </div>
       </>
     );
