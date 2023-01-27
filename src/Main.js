@@ -2,6 +2,7 @@ import axios from "axios";
 import React from "react";
 import { Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
+import img from './img/cityError.jpg'
 
 
 export class Main extends React.Component {
@@ -107,13 +108,12 @@ export class Main extends React.Component {
               show={this.state.showModal}
               onHide={this.closeModal}>
               <Modal.Body>
-                <img src="./img/cityError.jpg"
+                <img src={img}
                  alt="City missing"
                  height={200}
-                 width={600}/>
-                 <p>City Not Found</p>
+                 width={465}/>
+                 <p>City Not Found, Try Again</p>
                 </Modal.Body>
-
               </Modal>
         </div>
       </>
