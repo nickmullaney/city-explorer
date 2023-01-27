@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { Button, Card, Container, Form } from "react-bootstrap";
+import { Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
 
 
@@ -16,7 +16,8 @@ export class Main extends React.Component {
       cityData: {},
       restaurantData: [],
       locationData: [],
-      weatherData: []
+      weatherData: [],
+      showModal: false
     }
   }
 
@@ -34,16 +35,31 @@ export class Main extends React.Component {
   displaySearch = async (e) => {
     e.preventDefault();
 
-    let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`
+    try{
+      let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`
+  
+      //this waits the pull response from the url then sets response
+      let response = await axios.get(url);
+      console.log(response);
+  
+      // new state set
+      this.setState({
+        displayInfo: true,
+        cityData: response.data[0]
+      })
+    }
+    //This is error code
+    catch(err){
+      this.setState({
+        showModal: true
+      })
+    }
+  }
 
-    //this waits the pull response from the url then sets response
-    let response = await axios.get(url);
-    console.log(response);
-
-    // new state set
+  // Function to close modal
+  closeModal = ()=>{
     this.setState({
-      displayInfo: true,
-      cityData: response.data[0]
+      showModal:false
     })
   }
 
@@ -87,7 +103,18 @@ export class Main extends React.Component {
               }
             </div>
           </Card>
+              <Modal
+              show={this.state.showModal}
+              onHide={this.closeModal}>
+              <Modal.Body>
+                <img src="./img/cityError.jpg"
+                 alt="City missing"
+                 height={200}
+                 width={600}/>
+                 <p>City Not Found</p>
+                </Modal.Body>
 
+              </Modal>
         </div>
       </>
     );
