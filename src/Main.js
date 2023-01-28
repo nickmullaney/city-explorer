@@ -94,7 +94,7 @@ export class Main extends React.Component {
           <Card style={{ width: 'auto' }}>
             {/* imports the map */}
             {this.state.cityData.lat &&
-              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />}
+              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} cityData = {this.state.cityData} />}
             <div>
               {this.state.displayInfo &&
                 <>
