@@ -117,8 +117,8 @@ export class Main extends React.Component {
                   <div className="weather">
                   <Card.Text>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</Card.Text>
                   {/* Weather Data */}
+                  {this.state.weatherData &&
                   <Card.Text>
-                    
                     <p>Weather</p>
                     <ul>
                     {this.state.weatherData.map((item)=>
@@ -128,7 +128,7 @@ export class Main extends React.Component {
                       </li>
                     )}
                     </ul>
-                  </Card.Text>
+                  </Card.Text>}
                   </div>
                 </>
               }
