@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { AccordionCollapse, Button, Card, Container, Form, Modal } from "react-bootstrap";
+import {Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
 import img from './img/cityError.jpg'
 
