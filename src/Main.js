@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import { Button, Card, Container, Form, Modal } from "react-bootstrap";
+import {Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
 import img from './img/cityError.jpg'
 
@@ -37,12 +37,12 @@ export class Main extends React.Component {
     e.preventDefault();
 
     try{
-      let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`
+      let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`;
   
       //this waits the pull response from the url then sets response
       let response = await axios.get(url);
       console.log(response);
-  
+      this.getWeather();
       // new state set
       this.setState({
         displayInfo: true,
@@ -57,12 +57,27 @@ export class Main extends React.Component {
     }
   }
 
+  getWeather =async()=>{
+    try{
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weatherData?searchQuery=${this.state.city}`;
+      let response = await axios.get(weatherUrl);
+      this.setState({
+        weatherData: response.data
+      })
+    }
+    catch(err){
+      console.log(err);
+    }
+  }
+
   // Function to close modal
   closeModal = ()=>{
     this.setState({
       showModal:false
     })
   }
+
+
 
   render() {
     return (
@@ -94,12 +109,27 @@ export class Main extends React.Component {
           <Card style={{ width: 'auto' }}>
             {/* imports the map */}
             {this.state.cityData.lat &&
-              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />}
+              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} cityData = {this.state.cityData} />}
             <div>
               {this.state.displayInfo &&
                 <>
                   <Card.Title as="h2">{this.state.cityData.display_name}</Card.Title>
+                  <div className="weather">
                   <Card.Text>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</Card.Text>
+                  {/* Weather Data */}
+                  {this.state.weatherData &&
+                  <Card.Text>
+                    <p>Weather</p>
+                    <ul>
+                    {this.state.weatherData.map((item)=>
+                      <li>
+                        <p>{item.valid_date}</p>
+                        <p>{item.description}</p>
+                      </li>
+                    )}
+                    </ul>
+                  </Card.Text>}
+                  </div>
                 </>
               }
             </div>
