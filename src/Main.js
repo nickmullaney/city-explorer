@@ -1,6 +1,6 @@
 import axios from "axios";
 import React from "react";
-import {Button, Card, Container, Form, Modal } from "react-bootstrap";
+import { Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
 import img from './img/cityError.jpg'
 
@@ -18,7 +18,8 @@ export class Main extends React.Component {
       restaurantData: [],
       locationData: [],
       weatherData: [],
-      showModal: false
+      showModal: false,
+      showError: false
     }
   }
 
@@ -36,9 +37,9 @@ export class Main extends React.Component {
   displaySearch = async (e) => {
     e.preventDefault();
 
-    try{
+    try {
       let url = `https://us1.locationiq.com/v1/search?key=${process.env.REACT_APP_LOCATIONIQ_KEY}&q=${this.state.city}&format=json`;
-  
+
       //this waits the pull response from the url then sets response
       let response = await axios.get(url);
       console.log(response);
@@ -50,34 +51,40 @@ export class Main extends React.Component {
       })
     }
     //This is error code
-    catch(err){
+    catch (err) {
       this.setState({
         showModal: true
       })
     }
   }
 
-  getWeather =async()=>{
-    try{
+  getWeather = async () => {
+    try {
       let weatherUrl = `${process.env.REACT_APP_SERVER}/weatherData?searchQuery=${this.state.city}`;
       let response = await axios.get(weatherUrl);
       this.setState({
         weatherData: response.data
       })
     }
-    catch(err){
+    catch (err) {
+      this.setState({
+        showError: true
+      });
       console.log(err);
     }
   }
 
   // Function to close modal
-  closeModal = ()=>{
+  closeModal = () => {
     this.setState({
-      showModal:false
+      showModal: false
     })
   }
 
+  // API Error
+  handleShowError = (e) => {
 
+  }
 
   render() {
     return (
@@ -109,42 +116,44 @@ export class Main extends React.Component {
           <Card style={{ width: 'auto' }}>
             {/* imports the map */}
             {this.state.cityData.lat &&
-              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} cityData = {this.state.cityData} />}
+              <Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} cityData={this.state.cityData} />}
             <div>
               {this.state.displayInfo &&
                 <>
                   <Card.Title as="h2">{this.state.cityData.display_name}</Card.Title>
                   <div className="weather">
-                  <Card.Text>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</Card.Text>
-                  {/* Weather Data */}
-                  {this.state.weatherData &&
-                  <Card.Text>
-                    <p>Weather</p>
-                    <ul>
-                    {this.state.weatherData.map((item)=>
-                      <li>
-                        <p>{item.valid_date}</p>
-                        <p>{item.description}</p>
-                      </li>
-                    )}
-                    </ul>
-                  </Card.Text>}
+                    <Card.Text>Lat: {this.state.cityData.lat}  Lon: {this.state.cityData.lon}</Card.Text>
+                    {/* Weather Data */}
+                    {this.state.weatherData &&
+                      <Card.Text>
+                        <p>Weather</p>
+                        <ul>
+                          {this.state.weatherData.map((item) =>
+                            <li>
+                              <p>{item.valid_date}</p>
+                              <p>{item.description}</p>
+                            </li>
+                          )}
+                        </ul>
+                      </Card.Text>}
                   </div>
                 </>
               }
             </div>
+
+
           </Card>
-              <Modal
-              show={this.state.showModal}
-              onHide={this.closeModal}>
-              <Modal.Body>
-                <img src={img}
-                 alt="City missing"
-                 height={200}
-                 width={465}/>
-                 <p>City Not Found, Try Again</p>
-                </Modal.Body>
-              </Modal>
+          <Modal
+            show={this.state.showModal}
+            onHide={this.closeModal}>
+            <Modal.Body>
+              <img src={img}
+                alt="City missing"
+                height={200}
+                width={465} />
+              <p>City Not Found, Try Again</p>
+            </Modal.Body>
+          </Modal>
         </div>
       </>
     );
