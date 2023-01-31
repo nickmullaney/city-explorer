@@ -75,7 +75,8 @@ export class Main extends React.Component {
       this.setState({
         showModal: true,
         errorImage: img2,
-        showErrorMessage: 'Error 401: Weather not Found'
+        showErrorMessage: 'Error 401: Weather not Found',
+        weatherData: []
       });
       console.log(err);
     }
@@ -89,8 +90,8 @@ export class Main extends React.Component {
   }
 
   // API Error
-  handleShowError = (e) => {
-
+  handleShowError = (err) => {
+    // Set states
   }
 
   render() {
