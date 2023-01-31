@@ -2,7 +2,8 @@ import axios from "axios";
 import React from "react";
 import { Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
-import img from './img/cityError.jpg'
+import img from './img/cityError.jpg';
+import img2 from './img/duck-waddling.gif';
 
 
 export class Main extends React.Component {
@@ -19,7 +20,8 @@ export class Main extends React.Component {
       locationData: [],
       weatherData: [],
       showModal: false,
-      showError: false
+      showErrorMessage: '',
+      errorImage: ''
     }
   }
 
@@ -53,7 +55,10 @@ export class Main extends React.Component {
     //This is error code
     catch (err) {
       this.setState({
-        showModal: true
+        // if statement for diff images
+        showModal: true,
+        errorImage: img,
+        showErrorMessage: 'City Not Found'
       })
     }
   }
@@ -68,7 +73,9 @@ export class Main extends React.Component {
     }
     catch (err) {
       this.setState({
-        showError: true
+        showModal: true,
+        errorImage: img2,
+        showErrorMessage: 'Error 401: Weather not Found'
       });
       console.log(err);
     }
@@ -147,11 +154,11 @@ export class Main extends React.Component {
             show={this.state.showModal}
             onHide={this.closeModal}>
             <Modal.Body>
-              <img src={img}
+              <img src={this.state.errorImage}
                 alt="City missing"
                 height={200}
                 width={465} />
-              <p>City Not Found, Try Again</p>
+              <p>{this.state.showErrorMessage}</p>
             </Modal.Body>
           </Modal>
         </div>
