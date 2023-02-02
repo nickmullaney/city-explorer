@@ -45,13 +45,19 @@ export class Main extends React.Component {
       //this waits the pull response from the url then sets response
       let response = await axios.get(url);
       console.log(response);
+      // Gets the weather
       this.getWeather();
+
+      // Gets the movies
+      this.getMovies();
+
       // new state set
       this.setState({
         displayInfo: true,
         cityData: response.data[0]
       })
     }
+
     //This is error code
     catch (err) {
       this.setState({
@@ -65,6 +71,9 @@ export class Main extends React.Component {
 
   getWeather = async () => {
     try {
+      //trying to update with live weather
+      // let liveWeather = `https://api.weatherbit.io/v2.0/current?key${REACT_APP_WEATHER_API_KEY}&city=${this.state.city}`;
+      //old
       let weatherUrl = `${process.env.REACT_APP_SERVER}/weatherData?searchQuery=${this.state.city}`;
       let response = await axios.get(weatherUrl);
       this.setState({
@@ -77,6 +86,28 @@ export class Main extends React.Component {
         errorImage: img2,
         showErrorMessage: 'Error 401: Weather not Found',
         weatherData: []
+      });
+      console.log(err);
+    }
+  }
+
+  getMovies = async () => {
+    try {
+      //trying to update with live weather
+      // let liveWeather = `https://api.weatherbit.io/v2.0/current?key${REACT_APP_WEATHER_API_KEY}&city=${this.state.city}`;
+      //old
+      let moviesUrl = `${process.env.REACT_APP_SERVER}/weatherData?searchQuery=${this.state.city}`;
+      let response = await axios.get(moviesUrl);
+      this.setState({
+        moviesData: response.data
+      })
+    }
+    catch (err) {
+      this.setState({
+        showModal: true,
+        errorImage: img2,
+        showErrorMessage: 'Error 401: Weather not Found',
+        moviesData: []
       });
       console.log(err);
     }
@@ -107,19 +138,6 @@ export class Main extends React.Component {
           </Form>
         </Container>
 
-        {/* Card testing spot for mb-3 image on top card */}
-        {/* <div class="card mb-3">
-          <img class="card-img-top" src={<Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />} alt="Card image cap" />
-          <div class="card-body">
-            <h5 class="card-title">Card title</h5>
-            <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-            <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-          </div>
-        </div>
-        <Card-mb-3>
-          <Card-img-top src={<Map lat={this.state.cityData.lat} lon={this.state.cityData.lon} />} />
-        </Card-mb-3> */}
-
         <div className="cityMap">
           <Card style={{ width: 'auto' }}>
             {/* imports the map */}
@@ -148,7 +166,6 @@ export class Main extends React.Component {
                 </>
               }
             </div>
-
 
           </Card>
           <Modal
