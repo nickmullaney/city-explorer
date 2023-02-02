@@ -5,7 +5,6 @@ import Map from "./Map";
 import img from './img/cityError.jpg';
 import img2 from './img/duck-waddling.gif';
 
-
 export class Main extends React.Component {
   // import props
   constructor(props) {
@@ -49,7 +48,7 @@ export class Main extends React.Component {
       this.getWeather();
 
       // Gets the movies
-      this.getMovies();
+      // this.getMovies();
 
       // new state set
       this.setState({
@@ -71,15 +70,14 @@ export class Main extends React.Component {
 
   getWeather = async () => {
     try {
-      //trying to update with live weather
-      // let liveWeather = `https://api.weatherbit.io/v2.0/current?key${REACT_APP_WEATHER_API_KEY}&city=${this.state.city}`;
-      //old
-      let weatherUrl = `${process.env.REACT_APP_SERVER}/weatherData?searchQuery=${this.state.city}`;
+      let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
       let response = await axios.get(weatherUrl);
+      console.log(response);
       this.setState({
         weatherData: response.data
       })
     }
+
     catch (err) {
       this.setState({
         showModal: true,
@@ -156,7 +154,7 @@ export class Main extends React.Component {
                         <ul>
                           {this.state.weatherData.map((item) =>
                             <li>
-                              <p>{item.valid_date}</p>
+                              <p>{item.date}</p>
                               <p>{item.description}</p>
                             </li>
                           )}
