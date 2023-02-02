@@ -70,9 +70,12 @@ export class Main extends React.Component {
 
   getWeather = async () => {
     try {
+      //sets our weather url from our server and searchquery is the same as city for the url on the back end
       let weatherUrl = `${process.env.REACT_APP_SERVER}/weather?searchQuery=${this.state.city}`;
+      //await our response of the data from the live api
       let response = await axios.get(weatherUrl);
       console.log(response);
+      //set state with data and use the defined terms("date" and "description")
       this.setState({
         weatherData: response.data
       })
@@ -154,6 +157,7 @@ export class Main extends React.Component {
                         <ul>
                           {this.state.weatherData.map((item) =>
                             <li>
+                              {/* Using info from weather API */}
                               <p>{item.date}</p>
                               <p>{item.description}</p>
                             </li>
