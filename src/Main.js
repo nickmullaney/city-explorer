@@ -174,7 +174,7 @@ export class Main extends React.Component {
                                 <p>{item.title}</p>
                                 <p>{item.overview}</p>
                                 <p>{item.average_votes}</p>
-                                <img src={`https://image.tmdb.org/t/p/w500${item.poster}`}></img>
+                                <img src={`https://image.tmdb.org/t/p/w500${item.poster}`} alt={`${item.title}`}></img>
                                 <p>{item.poster}</p>
                                 <p>{item.popularity}</p>
                                 <p>{item.released_on}</p>
