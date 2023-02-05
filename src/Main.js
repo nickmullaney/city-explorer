@@ -4,6 +4,8 @@ import { Button, Card, Container, Form, Modal } from "react-bootstrap";
 import Map from "./Map";
 import img from './img/cityError.jpg';
 import img2 from './img/duck-waddling.gif';
+import Weather from './Weather';
+import Movies from './Movies';
 
 export class Main extends React.Component {
   // import props
@@ -151,37 +153,15 @@ export class Main extends React.Component {
                   <div className="cityData">
                     <div className="weather">
                       {/* Weather Data */}
-                      {this.state.weatherData &&
-                        <Card.Text>
-                          <p>Weather</p>
-                          <ul>
-                            {this.state.weatherData.map((item) =>
-                              <li>
-                                {/* Using info from weather API */}
-                                <p>{item.date}</p>
-                                <p>{item.description}</p>
-                              </li>
-                            )}
-                          </ul>
-                        </Card.Text>}
+                      {this.state.WeatherData &&
+                      // Componetized Weather Data
+                      <Weather/>
+                      // <Weather weatherData={this.state.weatherData}/>
+                      }
                     </div>
                     <div className="movies">
                       {this.state.moviesData.length > 0 &&
-                        <Card.Text>
-                          <ul>
-                            {this.state.moviesData.map((item) =>
-                              <li>
-                                <p>{item.title}</p>
-                                <p>{item.overview}</p>
-                                <p>{item.average_votes}</p>
-                                <img src={`https://image.tmdb.org/t/p/w500${item.poster}`} alt={`${item.title}`}></img>
-                                <p>{item.poster}</p>
-                                <p>{item.popularity}</p>
-                                <p>{item.released_on}</p>
-                              </li>
-                            )}
-                          </ul>
-                        </Card.Text>
+                        <Movies moviesData = {this.state.moviesData}/>
                       }
                     </div>
                   </div>
