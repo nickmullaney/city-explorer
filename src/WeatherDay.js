@@ -1,16 +1,17 @@
-import React from "react";
+import React from "react"
 import { Card } from "react-bootstrap";
+
 
 class WeatherDay extends React.Component {
   render() {
     return (
-      <li>
-        {/* Using info from weather API */}
-        <p>{this.props.item.date}</p>
-        <p>{this.props.item.description}</p>
-      </li>
+      <>
+      <Card.Text> { this.props.item.date }</Card.Text>
+      <Card.Text> {this.props.item.description}</Card.Text>
+      </>
     )
   }
 }
+
 
 export default WeatherDay;

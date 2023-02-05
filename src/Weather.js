@@ -5,18 +5,15 @@ import WeatherDay from "./WeatherDay";
 class Weather extends React.Component {
 
   render() {
+    console.log(this.props.weatherData);
     return (
-      <Card.Text>
-        <p>Weather</p>
-        <ul>
-          {this.props.weatherData.map((item) =>
-            <WeatherDay item={item} />
-          )}
-        </ul>
-      </Card.Text>
+      <Card>
+        {this.props.weatherData.map((item, idx) =>
+          <WeatherDay item={item} key={idx} />
+        )
+        }
+      </Card >
     )
-  }
+  };
 }
-
-
 export default Weather;

@@ -128,6 +128,7 @@ export class Main extends React.Component {
   }
 
   render() {
+    console.log(this.state);
     return (
       <>
         <Container>
@@ -153,10 +154,9 @@ export class Main extends React.Component {
                   <div className="cityData">
                     <div className="weather">
                       {/* Weather Data */}
-                      {this.state.WeatherData &&
+                      {this.state.weatherData.length> 0 &&
                       // Componetized Weather Data
-                      <Weather/>
-                      // <Weather weatherData={this.state.weatherData}/>
+                      <Weather weatherData={this.state.weatherData}/>
                       }
                     </div>
                     <div className="movies">
