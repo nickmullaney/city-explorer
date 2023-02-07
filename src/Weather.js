@@ -1,5 +1,4 @@
 import React from "react";
-import { Card } from "react-bootstrap";
 import WeatherDay from "./WeatherDay";
 
 class Weather extends React.Component {
