@@ -14,6 +14,7 @@ class Yelp extends React.Component {
             <Card.Text>Rating: {item.rating}</Card.Text>
             <Card.Text>
               <a href ={item.url}>Visit us at {item.name}</a>
+              
               </Card.Text>
           </Card>
         )}
