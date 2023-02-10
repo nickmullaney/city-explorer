@@ -45,6 +45,10 @@
   height: auto;
 }
 
+.cityMap{
+  display: flex;
+}
+
 .header {
   display: flex;
   flex-direction: column;
@@ -107,7 +111,8 @@
   border-radius: 10px;
   box-shadow: 2px 1px 0px rgb(49, 63, 75), 5px 4px 0px rgba(81, 80, 80, 0.537);
   background-color: #00000063;
-  color: rgb(246, 239, 230);
+  color: rgb(246, 239, 230)
+  ;
 }
 
 .movies{
@@ -134,6 +139,24 @@
 
 .weather .card{
   background-color: #00000063;
+  box-shadow: 2px 1px 0px rgb(49, 63, 75), 5px 4px 0px rgba(81, 80, 80, 0.537);
+}
+
+.yelp{
+  overflow: auto;
+  width: 500px;
+  height: auto;
+}
+
+.yelp .card img{
+  border-radius: 10px;
+  margin-left: 2rem;
+  box-shadow: 2px 1px 0px rgb(49, 63, 75), 5px 4px 0px rgba(81, 80, 80, 0.537);
+}
+
+.yelp .card{
+  background-color: #a5aec0;
+  padding: .1rem;
   box-shadow: 2px 1px 0px rgb(49, 63, 75), 5px 4px 0px rgba(81, 80, 80, 0.537);
 }
 

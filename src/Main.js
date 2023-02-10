@@ -6,6 +6,7 @@ import img from './img/cityError.jpg';
 import img2 from './img/duck-waddling.gif';
 import Weather from './Weather';
 import Movies from './Movies';
+import Yelp from './Yelp'
 
 export class Main extends React.Component {
   // import props
@@ -20,6 +21,7 @@ export class Main extends React.Component {
       moviesData: [],
       locationData: [],
       weatherData: [],
+      yelpData: [],
       showModal: false,
       showErrorMessage: '',
       errorImage: ''
@@ -45,12 +47,15 @@ export class Main extends React.Component {
 
       //this waits the pull response from the url then sets response
       let response = await axios.get(url);
-      console.log(response);
+      // console.log(response);
       // Gets the weather
       this.getWeather();
 
       // Gets the movies
       this.getMovies();
+
+      // gets yelp info
+      this.getYelp();
 
       // new state set
       this.setState({
@@ -115,6 +120,30 @@ export class Main extends React.Component {
     }
   }
 
+
+
+// Yelp API Stuff
+  getYelp = async () => {
+    try {
+      let yelpUrl = `${process.env.REACT_APP_SERVER}/yelp?searchQuery=${this.state.city}`;
+      console.log("Yelp API", yelpUrl);
+      let response = await axios.get(yelpUrl);
+
+      this.setState({
+        yelpData: response.data
+      })
+    }
+    catch (err) {
+      this.setState({
+        showModal: true,
+        errorImage: img2,
+        showErrorMessage: 'Error 401: Yelp not Found',
+        yelpData: []
+      });
+      console.log(err);
+    }
+  }
+
   // Function to close modal
   closeModal = () => {
     this.setState({
@@ -128,7 +157,7 @@ export class Main extends React.Component {
   }
 
   render() {
-    console.log(this.state);
+    // console.log(this.state);
     return (
       <>
         <Container>
@@ -163,6 +192,10 @@ export class Main extends React.Component {
                       {this.state.moviesData.length > 0 &&
                         <Movies moviesData = {this.state.moviesData}/>
                       }
+                    </div>
+                    <div className="yelp">
+                      {this.state.yelpData.length > 0 &&
+                      <Yelp yelpData = {this.state.yelpData}/>}
                     </div>
                   </div>
                 </>
